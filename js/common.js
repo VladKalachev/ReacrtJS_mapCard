@@ -26,32 +26,24 @@
 /*массив с данными*/
 const HOTELS = [
     {
-        id: 7969942,
+        id: 1,
         name: 'Beautiful, best located apartment!',
-        description: 'Im Herzen Berlins begrüßt dich diese moderne, helle und komplett eingerichtete 3 Zimmer Wohnung, mit Blick auf den Kreuzberger Spreewaldplatz und nur 200m zum Görlitzer Park.',
-        price: 209,
-        image: 'https://a1.muscache.com/im/pictures/109467913/296cdac4_original.jpg?aki_policy=x_medium'
+
     },
     {
-        id: 4508183,
+        id: 2,
         name: 'Fantastic view in a superlocation',
-        description: 'A peacefull oasis in the middle of the city, with fantastic view from balcony. The most highlights are in walking distance. Bus, subway, supermarkets, restaurants and cafes just at the corner(URL HIDDEN)',
-        price: 104,
-        image: 'https://a2.muscache.com/im/pictures/60695965/9cdada99_original.jpg?aki_policy=x_medium'
+
     },
     {
-        id: 13501472,
+        id: 3,
         name: 'Nice and central in Berlin',
-        description: 'Nice altbau apartment (complete renovated) nearby Mauerpark an Bernauer Straße. It is in the district of Berlin-Mitte, you can reach any atrraction of Berlin within less than 30 Minutes by subway tram or bycycle.',
-        price: 117,
-        image: 'https://a0.muscache.com/im/pictures/158207ca-75db-4f05-90ad-90519c227cf7.jpg?aki_policy=x_medium'
+
     },
     {
-        id: 976856,
+        id: 4,
         name: 'living at checkpoint charlie',
-        description: 'The apartment is in the former East of Berlin between Potsdamer Platz and Alexanderplatz. This part of town is a very attractive residential area and full of history and places to discover. The “Mitte” fashion district, dozens of good restaurants, bars, theatres and clubs are at the doorsteps.',
-        price: 48,
-        image: 'https://a1.muscache.com/im/pictures/16948729/687c16bc_original.jpg?aki_policy=x_medium'
+      
     }
 ];
 
@@ -82,6 +74,7 @@ const HOTELS = [
 });*/
 
 const TodoCart = React.createClass({
+
    getInitialState() {
         return {
             visibl: true
@@ -98,33 +91,61 @@ const TodoCart = React.createClass({
   render: function () {
     return (
       <div className={this.state.visibl ? '' : 'none'}>
-      <div>{this.props.name}</div>
-        <div>{this.props.description}</div>
-       <button onClick={this.onCl} >Dell</button>
+      
+      <div className="dell"> {this.props.name}</div>
+       
+        <button className="btnAdd" onClick={this.onCl} >Dell</button>
+
       </div>
     );
   }
 });
 
 const TodoApp = React.createClass({
+
     /*состяоние по умолчания*/
   getInitialState() {
-        return {
-            displayedHotels: HOTELS
-        };
+    return {
+        displayedHotels: HOTELS,
+        text: ''
+    };
   },
+
+  onChange: function (e) {
+    
+    this.setState({
+      text: e.target.value
+    });
+
+    console.log(e.target.value);
+  },
+
+  onForm: function (e) {
+
+    e.preventDefault();
+
+    var nextItems = this.state.displayedHotels.concat([{name: this.state.text}]);
+    var nextText = '';
+    this.setState({displayedHotels: nextItems, text: nextText});
+    console.log(nextItems);
+  },
+
 
   render: function() {
 
-    var photos = this.state.displayedHotels.map(function(photo, key) {
-      return <TodoCart key={key.toString()} name={photo.name} description={photo.description} />
+    var photos = this.state.displayedHotels.map(function(photo, key, id) {
+      return <li><TodoCart key={key.toString()} name={photo.name} id={photo.id}  /></li>
     });
 
     return (
       <div>      
-        <h1>List</h1>
-  
-          <div>{photos}</div>        
+        <h1>TODO List</h1>
+          <form onSubmit={this.onForm}>
+            <input onChange={this.onChange} value={this.state.text} />
+            <button className="btnAdd">Add</button>
+          </form>
+          <div><ul>{photos}</ul></div>
+
       </div>
       );
   }

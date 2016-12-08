@@ -41,3 +41,11 @@
 .none {
         display: none !important;
 }
+
+ul {
+        list-style-type: none;
+}
+
+.dell {
+    float: left;
+}
