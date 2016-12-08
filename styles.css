@@ -39,5 +39,5 @@
 }
 
 .none {
-        color: red;
+        display: none !important;
 }

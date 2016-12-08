@@ -82,12 +82,25 @@ const HOTELS = [
 });*/
 
 const TodoCart = React.createClass({
+   getInitialState() {
+        return {
+            visibl: true
+        };
+  },
+
+  onCl: function(){
+    console.log(111);
+    this.setState({
+      visibl: false
+    });
+  },
+
   render: function () {
     return (
-      <div>
-        <p>Text</p>
-        <div>{this.props.name}</div>
+      <div className={this.state.visibl ? '' : 'none'}>
+      <div>{this.props.name}</div>
         <div>{this.props.description}</div>
+       <button onClick={this.onCl} >Dell</button>
       </div>
     );
   }
